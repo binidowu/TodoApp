@@ -2,9 +2,6 @@
     "scripts": {
         "build": "cd frontend/todo-list-frontend && npm run build"
     },
-    "devDependencies": {
-        "concurrently": "^8.2.2"
-    },
     "dependencies": {
         "react-scripts": "^5.0.1"
     }
