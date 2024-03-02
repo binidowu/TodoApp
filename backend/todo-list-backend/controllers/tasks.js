@@ -5,7 +5,7 @@ require("dotenv").config();
 // Create a new Task
 exports.createTask = async (req, res, next) => {
   try {
-    const userId = req.body.userId;
+    const userId = req.user.id;
 
     const title = req.body.title;
 
@@ -24,6 +24,9 @@ exports.createTask = async (req, res, next) => {
     // Save new task
     const createdTask = await Task.create(newTask);
 
+    // Push created task to tasks array in the database
+    await User.findByIdAndUpdate(userId, { $push: { tasks: createdTask._id } });
+
     // Return new task
     res.status(201).json({
       success: true,
@@ -39,7 +42,7 @@ exports.createTask = async (req, res, next) => {
 // Get all tasks
 exports.getAllTasks = async (req, res, next) => {
   try {
-    const userId = req.body.id;
+    const userId = req.user.id;
     const tasks = await Task.find({ userId: userId });
 
     if (!tasks) {

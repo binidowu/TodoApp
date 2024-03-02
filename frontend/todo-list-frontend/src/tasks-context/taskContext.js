@@ -107,21 +107,38 @@ export const TaskProvider = ({ children }) => {
   };
 
   // Task management methods
+  // const fetchTasks = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     if (!response.ok) {
+  //       throw new Error("Fetching tasks failed");
+  //     }
+  //     console.log("response get all task", data);
+  //     updateTasks(data.tasks);
+  //   } catch (error) {
+  //     console.error("Fetching tasks failed:", error);
+  //     setState({ ...state, tasks: [] });
+  //   }
+  // };
+
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://localhost:3000/tasks", {
-        method: "POST",
+      const response = await axios.get("http://localhost:3000/tasks", {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: state.user._id }),
       });
-      const data = await response.json();
       if (!response.ok) {
         throw new Error("Fetching tasks failed");
       }
-      console.log("response get all task", data);
-      updateTasks(data.tasks);
+      console.log("response get all task", response.data);
+      updateTasks(response.data.tasks);
     } catch (error) {
       console.error("Fetching tasks failed:", error);
       setState({ ...state, tasks: [] });
@@ -140,7 +157,7 @@ export const TaskProvider = ({ children }) => {
 
   const createTask = async (taskData) => {
     try {
-      const response = await fetch("http://localhost:3000/tasks/newtask", {
+      const response = await fetch("http://localhost:3000/newtask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -182,7 +199,7 @@ export const TaskProvider = ({ children }) => {
 
   const deleteAllTasks = async (taskId) => {
     try {
-      await axios.delete("http://localhost:3000/");
+      await axios.delete("http://localhost:3000/all");
       updateTasks([]);
     } catch (error) {
       console.error("Deleting all tasks failed:", error);

@@ -18,7 +18,7 @@ exports.loginUser = (req, res, next) => {
       }
       console.log("logged in successfully", user);
       const userData = {
-        id: user._id,
+        id: user.id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -35,8 +35,8 @@ exports.logoutUser = (req, res) => {
 };
 
 exports.isAuthenticated = (req, res, next) => {
-  // if (req.isAuthenticated()) {
-  return next();
-  // }
-  // return res.status(401).json({ success: false, message: "User is not authenticated" });
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.status(401).json({ success: false, message: "User is not authenticated" });
 };

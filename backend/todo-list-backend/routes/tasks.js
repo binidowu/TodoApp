@@ -1,5 +1,4 @@
-const { isAuthenticated } = require("../controllers/auth.js");
-//const { isAuthorized } = require('../controllers/users');
+const { isAuthenticated } = require("../controllers/auth");
 
 let express = require("express");
 let router = express.Router();
@@ -10,7 +9,7 @@ let tasksController = require("../controllers/tasks.js");
 router.post("/newtask", isAuthenticated, tasksController.createTask);
 
 // Get all tasks
-router.post("/", isAuthenticated, tasksController.getAllTasks);
+router.get("/", isAuthenticated, tasksController.getAllTasks);
 
 // Get a single task
 router.get("/:taskID", isAuthenticated, tasksController.getTask);
@@ -22,6 +21,6 @@ router.put("/:taskID", isAuthenticated, tasksController.updateTask);
 router.delete("/:taskID", isAuthenticated, tasksController.deleteTask);
 
 // Delete a task
-router.delete("/", isAuthenticated, tasksController.deleteAllTasks);
+router.delete("/all", isAuthenticated, tasksController.deleteAllTasks);
 
 module.exports = router;
